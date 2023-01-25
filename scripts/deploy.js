@@ -2,7 +2,9 @@ const ethers = require('ethers');
 const solc = require('solc');
 const fs = require('fs');
 require("dotenv").config({ path: ".env" });
-(async (inputSources,contractFileName,contractName,argsArray) => {
+
+async function deploy(inputSources,contractFileName,contractName,argsArray)
+ {
   const provider = new ethers.providers.JsonRpcProvider(process.env.POLYGON_TESTNET_RPC_URL);
  
 
@@ -42,6 +44,19 @@ const abi = cont.abi
     console.log(`Deployment successful! Contract Address: ${contract.address}`);
     }
   
-})({
-    'Token.sol': { content: fs.readFileSync('/home/axat/per/deployment-script/Contract-Deployment-Script/contracts/Token.sol', 'utf8') },
-    },"Token.sol","Token")
+  /*
+    send the data in the following object with format 
+
+   ({
+    'contract1.sol': { content: contract1 },
+    'contract2.sol': { content: contract2 },
+    'contarct3.sol': { content: contract3 }
+  }, name of the main contract file , Name of The main contract)
+
+  */
+  
+}
+
+deploy({
+  'Token.sol': { content: fs.readFileSync('/home/axat/per/deployment-script/Contract-Deployment-Script/contracts/Token.sol', 'utf8') },
+}, "Token.sol", "Token");
