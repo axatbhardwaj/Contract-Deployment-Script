@@ -1,22 +1,15 @@
 const ethers = require('ethers');
 const solc = require('solc');
 const fs = require('fs');
-//const walletGen = require(walletGen.js)
 require("dotenv").config({ path: ".env" });
 (async (inputSources,contractFileName,contractName,argsArray) => {
   const provider = new ethers.providers.JsonRpcProvider(process.env.POLYGON_TESTNET_RPC_URL);
- // var contractSupply = fs.readFileSync(pathToContract);
-//   const scContent = fs.readFileSync('/home/axat/per/wallet/Wallet-Node/contracts/SupplyChain.sol', 'utf8'); /* PATH TO CONTRACT */
-// const mappingContent = fs.readFileSync('/home/axat/per/wallet/Wallet-Node/contracts/Mapping.sol', 'utf8'); /* PATH TO CONTRACT */
-// const structContent = fs.readFileSync('/home/axat/per/wallet/Wallet-Node/contracts/Struct.sol', 'utf8'); /* PATH TO CONTRACT */
-//   // contractSupply = contractSupply.toString();
-  //console.log(contractSupply.toString());
+ 
 
   const input = {
     language: 'Solidity',
     sources: {...inputSources},
     settings: {
-      //version :"0.8.0",
       outputSelection: { '*': { '*': ['*'] } },
       optimizer: {
         enabled: true,
@@ -26,20 +19,11 @@ require("dotenv").config({ path: ".env" });
   };
   
   var { contracts } = JSON.parse(solc.compile(JSON.stringify(input)))
-  //console.log(contracts);
-  //console.log(contractName);
   var cont = contracts[contractFileName][contractName];
-  //console.log(cont);
    const bytecode = cont.evm.bytecode.object;
- //  console.log(bytecode);
-//   // console.log(bytecode);
 
 const abi = cont.abi
-
- //console.log(abi);
-//   //  const walletGen = ethers.Wallet.createRandom()
-  
-//   // Use your wallet's private key to deploy the contract
+ // Use your wallet's private key to deploy the contract
   const privateKey = process.env.CONTRACT_DEPLOYER_PRIVATE_KEY;
   const wallet = new ethers.Wallet(privateKey, provider)
 
@@ -54,7 +38,6 @@ const abi = cont.abi
   }
   else
   {
-    //console.log("REACHED ;oskofk---------------------------------------------------------")
     const contract = await factory.deploy();
     await contract.deployed();
     console.log(`Deployment successful! Contract Address: ${contract.address}`);
