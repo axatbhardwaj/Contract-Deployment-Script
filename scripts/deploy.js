@@ -31,7 +31,6 @@ const abi = cont.abi
   const factory = new ethers.ContractFactory(abi, bytecode, wallet)
   if (Array.isArray(argsArray) && argsArray.length > 0)
   {   
-    //console.log(...argsArray);
     const contract = await factory.deploy(...argsArray);
     await contract.deployed();
     console.log(`Deployment successful! Contract Address: ${contract.address}`);
